@@ -23,7 +23,6 @@
 #ifndef HTTP_COMMON_HPP
 #define HTTP_COMMON_HPP
 
-#include <coro/coro.hpp>
 #include <map>
 #include <sstream>
 #undef DELETE // Windows...
