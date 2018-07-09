@@ -30,31 +30,38 @@ Result send(Request const& request) {
     // Send an HTTP request.  Auto-fill the content-length headers.
     std::string const string = str(request); 
     
-    uint16_t port = 0;
+	std::string port;
     WskSocket socket;
 
     if (request.uri().scheme() == "http") {
-        port = 80;
+        port = "80";
     } else {
         return Result(STATUS_PROTOCOL_NOT_SUPPORTED, nullptr);
     }
-    if (request.uri().port()) {
+    if (request.uri().port().length()) {
         port = request.uri().port();
     }
 
 	NTSTATUS status;
 
-	ANSI_STRING host_anci;
-	UNICODE_STRING host_unicode;
+	ANSI_STRING host_ansi, port_ansi;
+	UNICODE_STRING host_unicode, port_unicode;
 
-	RtlInitAnsiString(&host_anci, request.uri().host().c_str());
-	status = RtlAnsiStringToUnicodeString(&host_unicode, &host_anci, true);
+	RtlInitAnsiString(&host_ansi, request.uri().host().c_str());
+	status = RtlAnsiStringToUnicodeString(&host_unicode, &host_ansi, true);
 	if (!NT_SUCCESS(status)) {
 		return Result(status, nullptr);
 	}
 
-	status = socket.connect(&host_unicode, port);
+	RtlInitAnsiString(&port_ansi, port.c_str());
+	status = RtlAnsiStringToUnicodeString(&port_unicode, &port_ansi, true);
+	if (!NT_SUCCESS(status)) {
+		return Result(status, nullptr);
+	}
+
+	status = socket.connect(&host_unicode, &port_unicode);
 	RtlFreeUnicodeString(&host_unicode);
+	RtlFreeUnicodeString(&port_unicode);
 
 	if (!NT_SUCCESS(status)) {
 		return Result(status, nullptr);

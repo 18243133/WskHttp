@@ -1,5 +1,5 @@
 #include <ntddk.h>
-#include <WskHttp/WskSocket.h>
+#include <WskHttp/WskHttp.hpp>
 
 
 VOID DriverUnload(
@@ -20,12 +20,15 @@ NTSTATUS DriverEntry(
 	WskSocket::startup();
 
 	{
+		WskHttp::get("d");
 		WskSocket socket;
-		socket.connect(L"192.168.0.105", L"19730");
+		UNICODE_STRING host = RTL_CONSTANT_STRING(L"192.168.0.105");
+		UNICODE_STRING port = RTL_CONSTANT_STRING(L"19730");
+		socket.connect(&host, &port);
 		char str[] = "hello";
 		socket.send(str, sizeof(str));
 		char buf[100] = { 0 };
-		ULONG size = sizeof(buf);
+		SIZE_T size = sizeof(buf);
 		socket.recv(buf, &size);
 		DbgPrint("recv: %s\n", buf);
 	}
