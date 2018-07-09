@@ -135,7 +135,7 @@ _IRQL_requires_max_(DISPATCH_LEVEL) void __cdecl operator delete(
 }
 
 // An alternative implementation of __stdio_common_vsprintf_s
-_Success_(return >= 0) EXTERN_C inline int __cdecl __stdio_common_vsprintf_s(
+_Success_(return >= 0) EXTERN_C int __cdecl __stdio_common_vsprintf_s(
     _In_ unsigned __int64 _Options, _Out_writes_z_(_BufferCount) char *_Buffer,
     _In_ size_t _BufferCount,
     _In_z_ _Printf_format_string_params_(2) char const *_Format,
@@ -158,7 +158,7 @@ _Success_(return >= 0) EXTERN_C inline int __cdecl __stdio_common_vsprintf_s(
 
 // An alternative implementation of __stdio_common_vswprintf_s
 _Success_(return >= 0) _Check_return_opt_ EXTERN_C
-    inline int __cdecl __stdio_common_vswprintf_s(
+    int __cdecl __stdio_common_vswprintf_s(
         _In_ unsigned __int64 _Options,
         _Out_writes_z_(_BufferCount) wchar_t *_Buffer, _In_ size_t _BufferCount,
         _In_z_ _Printf_format_string_params_(2) wchar_t const *_Format,

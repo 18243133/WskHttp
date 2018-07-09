@@ -73,7 +73,7 @@ Result send(Request const& request) {
     }
 
     std::vector<char> buffer(16384); // 16 KiB
-    std::stringstream ss;
+    std::string s;
     
     SIZE_T size = buffer.size();
     for (;;) {
@@ -84,10 +84,10 @@ Result send(Request const& request) {
         if (size == 0) {
             break;
         }
-        ss.write(&buffer[0], size);
+        s.append(&buffer[0], size);
     }
 
-	return Result(STATUS_SUCCESS, ss.str());
+	return Result(STATUS_SUCCESS, s);
 }
 
 Result get(std::string const& path, std::string const& data) {
@@ -124,19 +124,40 @@ std::string str(Request::Method method) {
 
 std::string str(Request const& request) {
     // Serialize a request to a string
-    std::stringstream ss;
+    std::string s;
     auto path = request.path().empty() ? "/" : request.path();
-    ss << str(request.method()) << ' ' << path << " HTTP/1.1\n";
-    ss << Headers::HOST << ": " << request.uri().host() << "\n";
-    ss << Headers::CONTENT_LENGTH << ": " << request.data().size() << "\n";
-    ss << Headers::CONNECTION << ": close\n";
-    ss << Headers::ACCEPT_ENCODING << ": identity\n";
+
+	s.append(str(request.method()));
+	s.append(" ");
+	s.append(path);
+	s.append(" HTTP/1.1\n");
+
+	s.append(Headers::HOST);
+	s.append(": ");
+	s.append(request.uri().host());
+	s.append("\n");
+	char size[128];
+	sprintf_s(size, "%zd", request.data().size());
+	s.append(Headers::CONTENT_LENGTH);
+	s.append(": ");
+	s.append(size);
+	s.append("\n");
+
+	s.append(Headers::CONNECTION);
+	s.append(": close\n");
+
+	s.append(Headers::CONNECTION);
+	s.append(": identity\n");
+
     for(auto header : request.headers()) {
-        ss << header.first << ": " << header.second << "\n";
+		s.append(header.first);
+		s.append(": ");
+		s.append(header.second);
+		s.append("\n");
     }
-    ss << "\n";
-    ss << request.data();
-    return ss.str();
+	s.append("\n");
+	s.append(request.data());
+    return s;
 }
 
 NTSTATUS startup() { return WskSocket::startup(); }

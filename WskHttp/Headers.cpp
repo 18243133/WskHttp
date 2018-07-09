@@ -25,10 +25,10 @@
 
 namespace WskHttp {
 
-std::string const Headers::HOST("Host");
-std::string const Headers::CONTENT_LENGTH("Content-Length");
-std::string const Headers::ACCEPT_ENCODING("Accept-Encoding");
-std::string const Headers::CONNECTION("Connection");
+const char *Headers::HOST = "Host";
+const char *Headers::CONTENT_LENGTH = "Content-Length";
+const char *Headers::ACCEPT_ENCODING = "Accept-Encoding";
+const char *Headers::CONNECTION = "Connection";
 
 std::string const Headers::header(std::string const& name) const {
     auto i = header_.find(name);

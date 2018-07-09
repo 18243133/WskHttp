@@ -35,10 +35,10 @@ public:
     Map::const_iterator end() const { return header_.end(); }
     void headerIs(std::string const& name, std::string const& value);
 
-    static std::string const HOST;
-    static std::string const CONTENT_LENGTH;
-    static std::string const ACCEPT_ENCODING;
-    static std::string const CONNECTION;
+    static const char *HOST;
+    static const char *CONTENT_LENGTH;
+    static const char *ACCEPT_ENCODING;
+    static const char *CONNECTION;
 private:
     Map header_;
 };
