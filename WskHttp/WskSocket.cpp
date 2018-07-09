@@ -1,4 +1,4 @@
-#include <WskHttp/WskSocket.h>
+#include "WskHttp/WskSocket.hpp"
 
 
 #define SYNC(irp, event, completion_routine, timeout, func, ...)\
@@ -56,19 +56,16 @@ VOID WskSocket::cleanup() {
 	WskDeregister(&registration_);
 }
 
-NTSTATUS WskSocket::connect(CONST PWSTR host, CONST PWSTR port) {
+NTSTATUS WskSocket::connect(PUNICODE_STRING host, UINT16 port) {
 	NTSTATUS status = STATUS_SUCCESS;
 	PIRP irp = nullptr;
 	KEVENT event;
-	UNICODE_STRING node_name, service_name;
-	PADDRINFOEXW remote_addr_info;
+	PADDRINFOEXW remote_addr_info = nullptr;
+	PSOCKADDR_IN remote_addr = nullptr;
 	SOCKADDR_IN local_addr;
 	LARGE_INTEGER timeout;
 
 	KeInitializeEvent(&event, SynchronizationEvent, false);
-
-	RtlInitUnicodeString(&node_name, host);
-	RtlInitUnicodeString(&service_name, port);
 
 	IN4ADDR_SETANY(&local_addr);
 
@@ -86,8 +83,8 @@ NTSTATUS WskSocket::connect(CONST PWSTR host, CONST PWSTR port) {
 	status = SYNC(irp, &event, CompletionRoutine, &timeout,
 		provider_npi_.Dispatch->WskGetAddressInfo,
 			provider_npi_.Client,
-			&node_name,
-			&service_name,
+			host,
+			nullptr,
 			NS_ALL,
 			nullptr,
 			nullptr,
@@ -106,6 +103,9 @@ NTSTATUS WskSocket::connect(CONST PWSTR host, CONST PWSTR port) {
 		goto ret;
 	}
 
+	remote_addr = (PSOCKADDR_IN)remote_addr_info->ai_addr;
+	remote_addr->sin_port = RtlUshortByteSwap(port);
+
 
 	// connect
 	IoReuseIrp(irp, STATUS_SUCCESS);
@@ -116,7 +116,7 @@ NTSTATUS WskSocket::connect(CONST PWSTR host, CONST PWSTR port) {
 			SOCK_STREAM,
 			IPPROTO_TCP,
 			(PSOCKADDR)&local_addr,
-			(PSOCKADDR)remote_addr_info->ai_addr,
+			(PSOCKADDR)remote_addr,
 			0,
 			nullptr,
 			nullptr,
@@ -142,6 +142,13 @@ NTSTATUS WskSocket::connect(CONST PWSTR host, CONST PWSTR port) {
 ret:
 	if (irp) {
 		IoFreeIrp(irp);
+	}
+
+	if (remote_addr_info) {
+		provider_npi_.Dispatch->WskFreeAddressInfo(
+			provider_npi_.Client,
+			remote_addr_info
+		);
 	}
 
 	return status;
@@ -200,7 +207,7 @@ WskSocket::~WskSocket() {
 	close();
 }
 
-NTSTATUS WskSocket::send(CONST PVOID data, ULONG size) {
+NTSTATUS WskSocket::send(CONST VOID *data, SIZE_T size) {
 	NTSTATUS status = STATUS_SUCCESS;
 	KEVENT event;
 	PIRP irp = nullptr;
@@ -227,7 +234,7 @@ NTSTATUS WskSocket::send(CONST PVOID data, ULONG size) {
 
 	memcpy(buf, data, size);
 
-	mdl = IoAllocateMdl(buf, size, false, false, NULL);
+	mdl = IoAllocateMdl(buf, (ULONG)size, false, false, NULL);
 	if (!mdl) {
 		status = STATUS_INSUFFICIENT_RESOURCES;
 		goto ret;
@@ -275,7 +282,7 @@ ret:
 	return status;
 }
 
-NTSTATUS WskSocket::recv(PVOID data, ULONG *size) {
+NTSTATUS WskSocket::recv(PVOID data, SIZE_T *size) {
 	NTSTATUS status = STATUS_SUCCESS;
 	KEVENT event;
 	PIRP irp = nullptr;
@@ -301,7 +308,7 @@ NTSTATUS WskSocket::recv(PVOID data, ULONG *size) {
 	}
 
 
-	mdl = IoAllocateMdl(buf, *size, false, false, NULL);
+	mdl = IoAllocateMdl(buf, (ULONG)*size, false, false, NULL);
 	if (!mdl) {
 		status = STATUS_INSUFFICIENT_RESOURCES;
 		goto ret;
@@ -333,7 +340,7 @@ NTSTATUS WskSocket::recv(PVOID data, ULONG *size) {
 	status = irp->IoStatus.Status;
 	
 	if (NT_SUCCESS(status)) {
-		*size = (ULONG)irp->IoStatus.Information;
+		*size = irp->IoStatus.Information;
 		memcpy(data, buf, *size);
 	}
 

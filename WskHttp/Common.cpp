@@ -20,4 +20,4 @@
  * IN THE SOFTWARE.
  */
 
-#include "http/Common.hpp"
+#include "WskHttp/Common.hpp"

@@ -20,9 +20,11 @@
  * IN THE SOFTWARE.
  */
 
-#include "http/Common.hpp"
+#pragma once
 
-namespace http {
+#include "WskHttp/Common.hpp"
+
+namespace WskHttp {
 
 template <typename T>
 class ParseResult {

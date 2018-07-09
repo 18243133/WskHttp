@@ -20,11 +20,11 @@
  * IN THE SOFTWARE.
  */
 
-#include "http/Common.hpp"
-#include "http/Uri.hpp"
-#include "http/Parse.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Uri.hpp"
+#include "WskHttp/Parse.hpp"
 
-namespace http {
+namespace WskHttp {
 
 static bool isReserved(char ch) {
     switch (ch) {
@@ -98,10 +98,12 @@ static ParseResult<Authority> parseAuthority(char const* str) {
 
 static ParseResult<std::string> parsePath(char const* str) {
     // Return query/frag as part of path for now
+#pragma warning(disable: 4100)
     ParseResult<std::string> result = parseWhile(str, [](char ch) {
         return true; 
     }); 
-/*
+#pragma warning(default: 4100)
+	/*
     ParseResult<std::string> result = parseWhile(str, [](char ch) {
         return ch != '/' && !isReserved(ch);
     }); 

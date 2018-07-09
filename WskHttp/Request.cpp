@@ -20,10 +20,10 @@
  * IN THE SOFTWARE.
  */
 
-#include "http/Common.hpp"
-#include "http/Request.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Request.hpp"
 
-namespace http {
+namespace WskHttp {
 
 std::string const Request::header(std::string const& name) const {
     return headers_.header(name);

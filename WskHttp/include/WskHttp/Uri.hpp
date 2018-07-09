@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include "http/Common.hpp"
+#include "WskHttp/Common.hpp"
 
-namespace http {
+namespace WskHttp {
 
 class Authority {
 public:

@@ -20,12 +20,12 @@
  * IN THE SOFTWARE.
  */
 
-#include "http/Common.hpp"
-#include "http/Response.hpp"
-#include "http/Error.hpp"
-#include "http/Parse.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Response.hpp"
+#include "WskHttp/Error.hpp"
+#include "WskHttp/Parse.hpp"
 
-namespace http {
+namespace WskHttp {
 
 static ParseResult<Response::Status> parseStatus(char const* str) {
     ParseResult<Response::Status> result{};
@@ -43,9 +43,9 @@ Response parseResponse(char const* str) {
     auto message = parseUntil(code.ch, [](char ch) { return ch == '\r'; });
     
     auto response = Response();
-    if (version.value != "HTTP/1.1") {
-        throw Error("bad HTTP version");
-    }
+    //if (version.value != "HTTP/1.1") {
+    //    throw Error("bad HTTP version");
+    //}
       
     auto ch = parseCrLf(message.ch).ch;
     while (*ch != '\0' && *ch != '\r') {

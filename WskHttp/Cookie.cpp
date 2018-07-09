@@ -20,11 +20,11 @@
  * IN THE SOFTWARE.
  */
 
-#include "http/Common.hpp"
-#include "http/Cookies.hpp"
-#include "http/Parse.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Cookies.hpp"
+#include "WskHttp/Parse.hpp"
 
-namespace http {
+namespace WskHttp {
 
 ParseResult<std::string> parseName(char const* str) {
     return parseUntil(str, [](char ch) { return isspace(ch) || ch == '='; });
@@ -36,7 +36,7 @@ ParseResult<std::string> parseValue(char const* str) {
 
 ParseResult<std::string> parseSeparator(char const* str) {
     if (*str) {
-        assert(*str==';'||*str=='='); 
+		assert(*str==';'||*str=='=');
         return parseWhitespace(str+1);
     } else {
         auto result = ParseResult<std::string>{};

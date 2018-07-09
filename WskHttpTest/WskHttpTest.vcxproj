@@ -110,19 +110,19 @@
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <IncludePath>$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(SolutionDir)$(SolutionName)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>

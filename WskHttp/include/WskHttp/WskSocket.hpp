@@ -1,18 +1,19 @@
 #pragma once
+#include "WskHttp/Common.hpp"
 #include <ntddk.h>
 #include <wsk.h>
+
 
 class WskSocket {
 public:
 	static NTSTATUS startup();
 	static VOID cleanup();
 
-	WskSocket() : socket_(nullptr) {}
 	~WskSocket();
-	NTSTATUS connect(CONST PWSTR host, CONST PWSTR port);
+	NTSTATUS connect(PUNICODE_STRING host, UINT16 port);
 	NTSTATUS close();
-	NTSTATUS send(CONST PVOID data, ULONG size);
-	NTSTATUS recv(PVOID data, ULONG *size);
+	NTSTATUS send(CONST VOID *data, SIZE_T size);
+	NTSTATUS recv(PVOID data, SIZE_T *size);
 
 private:
 	const static WSK_CLIENT_DISPATCH kClientDispatch;
@@ -20,5 +21,5 @@ private:
 	static WSK_CLIENT_NPI client_npi_;
 	static WSK_PROVIDER_NPI provider_npi_;
 
-	PWSK_SOCKET socket_;
+	PWSK_SOCKET socket_ = nullptr;
 };

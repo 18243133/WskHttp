@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WskHttp", "WskHttp\WskHttp.vcxproj", "{7C30209B-3D9D-4417-80FE-7B5191B45FB8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WskHttpTest", "WskHttpTest\WskHttpTest.vcxproj", "{BD1F14D1-E109-495C-8995-A197AA9A1974}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C30209B-3D9D-4417-80FE-7B5191B45FB8} = {7C30209B-3D9D-4417-80FE-7B5191B45FB8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

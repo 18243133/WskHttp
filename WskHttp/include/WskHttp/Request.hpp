@@ -22,15 +22,23 @@
 
 #pragma once
 
-#include "http/Common.hpp"
-#include "http/Headers.hpp"
-#include "http/Uri.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Headers.hpp"
+#include "WskHttp/Uri.hpp"
 
-namespace http {
+namespace WskHttp {
 
 class Request {
 public:
-    enum Method { GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT };
+    enum Method {
+		METHOD_GET,
+		METHOD_HEAD,
+		METHOD_POST,
+		METHOD_PUT,
+		METHOD_DELETE,
+		METHOD_TRACE,
+		METHOD_CONNECT
+	};
 
     Method method() const { return method_; }
     Uri const& uri() const { return uri_; }
@@ -45,7 +53,7 @@ public:
     void headerIs(std::string const& name, std::string const& value);
 
 private:
-    Method method_ = GET;
+    Method method_ = METHOD_GET;
     Uri uri_;
     std::string data_;
     Headers headers_;

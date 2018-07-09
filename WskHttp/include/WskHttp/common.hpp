@@ -20,11 +20,19 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef HTTP_COMMON_HPP
-#define HTTP_COMMON_HPP
+#pragma once
+
+#undef _HAS_EXCEPTIONS
+#define _HAS_EXCEPTIONS 0
 
 #include <map>
+#include <vector>
+#include <string>
 #include <sstream>
-#undef DELETE // Windows...
 
-#endif
+#ifdef DBG
+#include <ntddk.h>
+#define assert(x) { if (!(x)) { KdBreakPoint(); } }
+#else
+#define assert(x)
+#endif // DBG

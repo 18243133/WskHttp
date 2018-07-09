@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  */
 
-namespace http {
+namespace WskHttp {
 
 class Cookie {
 public:

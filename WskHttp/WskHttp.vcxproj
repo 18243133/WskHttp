@@ -35,19 +35,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Common.cpp" />
+    <ClCompile Include="Cookie.cpp" />
+    <ClCompile Include="Headers.cpp" />
+    <ClCompile Include="KernelSTL.cpp" />
+    <ClCompile Include="WskHttp.cpp" />
+    <ClCompile Include="Request.cpp" />
+    <ClCompile Include="Response.cpp" />
+    <ClCompile Include="Uri.cpp" />
     <ClCompile Include="WskSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\WskHttp\common.hpp" />
+    <ClInclude Include="include\WskHttp\Common.hpp" />
     <ClInclude Include="include\WskHttp\Cookies.hpp" />
     <ClInclude Include="include\WskHttp\Error.hpp" />
     <ClInclude Include="include\WskHttp\Headers.hpp" />
-    <ClInclude Include="include\WskHttp\http.hpp" />
+    <ClInclude Include="include\WskHttp\Result.hpp" />
+    <ClInclude Include="include\WskHttp\WskHttp.hpp" />
     <ClInclude Include="include\WskHttp\Parse.hpp" />
     <ClInclude Include="include\WskHttp\Request.hpp" />
     <ClInclude Include="include\WskHttp\Response.hpp" />
     <ClInclude Include="include\WskHttp\Uri.hpp" />
-    <ClInclude Include="include\WskHttp\WskSocket.h" />
+    <ClInclude Include="include\WskHttp\WskSocket.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7C30209B-3D9D-4417-80FE-7B5191B45FB8}</ProjectGuid>
@@ -131,16 +140,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>include;$(IncludePath)</IncludePath>
+    <IncludePath>include;$(VC_IncludePath);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>include;$(IncludePath)</IncludePath>
+    <IncludePath>include;$(VC_IncludePath);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>include;$(IncludePath)</IncludePath>
+    <IncludePath>include;$(VC_IncludePath);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>include;$(IncludePath)</IncludePath>
+    <IncludePath>include;$(VC_IncludePath);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

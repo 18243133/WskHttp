@@ -22,11 +22,11 @@
 
 #pragma once
 
-#include "http/Common.hpp"
-#include "http/Headers.hpp"
-#include "http/Cookies.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Headers.hpp"
+#include "WskHttp/Cookies.hpp"
 
-namespace http {
+namespace WskHttp {
 
 class Response {
 public:

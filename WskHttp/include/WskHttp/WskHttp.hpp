@@ -22,17 +22,23 @@
 
 #pragma once
 
-#include "http/Common.hpp"
-#include "http/Request.hpp"
-#include "http/Response.hpp"
-#include "http/Uri.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Request.hpp"
+#include "WskHttp/Response.hpp"
+#include "WskHttp/Uri.hpp"
+#include "WskHttp/WskSocket.hpp"
+#include "WskHttp/Result.hpp"
 
-namespace http {
 
-Response get(std::string const& path, std::string const& data="");
-Response post(std::string const& path, std::string const& data="");
-Response send(Request const& request);
+namespace WskHttp {
+
+Result get(std::string const& path, std::string const& data="");
+Result post(std::string const& path, std::string const& data="");
+Result send(Request const& request);
 
 std::string str(Request const& request);
+
+NTSTATUS startup();
+VOID cleanup();
 
 }

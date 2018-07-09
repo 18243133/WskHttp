@@ -20,10 +20,10 @@
  * IN THE SOFTWARE.
  */
 
-#include "http/Common.hpp"
-#include "http/Headers.hpp"
+#include "WskHttp/Common.hpp"
+#include "WskHttp/Headers.hpp"
 
-namespace http {
+namespace WskHttp {
 
 std::string const Headers::HOST("Host");
 std::string const Headers::CONTENT_LENGTH("Content-Length");
