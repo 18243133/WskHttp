@@ -9,6 +9,11 @@ public:
 		response_ = NT_SUCCESS(status) ? new Response(text) : nullptr;
 	}
 
+	Result(NTSTATUS status, const char *text) {
+		status_ = status;
+		response_ = NT_SUCCESS(status) ? new Response(text) : nullptr;
+	}
+
 	~Result() {
 		delete response_;
 	}

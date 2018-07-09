@@ -20,10 +20,12 @@ NTSTATUS DriverEntry(
 	WskHttp::startup();
 
 	{
-		auto result = WskHttp::get("http://192.168.0.105:8000");
+		auto result = WskHttp::get("http://r.qzone.qq.com/fcg-bin/cgi_get_score.fcg?mask=7&uins=123456");
 		if (NT_SUCCESS(result.status())) {
 			DbgPrint("%d\n", result.response()->status());
 			DbgPrint("%s\n", result.response()->data().c_str());
+		} else {
+			DbgPrint("%X\n", result.status());
 		}
 	}
 
