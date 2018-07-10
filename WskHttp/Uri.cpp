@@ -62,13 +62,19 @@ static ParseResult<std::string> parseHost(char const* str) {
     });
 }
 
-static ParseResult<std::string> parsePort(char const* str) {
+static ParseResult<uint16_t> parsePort(char const* str) {
+    ParseResult<uint16_t> result;
     if (str[0] != ':') {
-        return ParseResult<std::string>();
+        result.value = 0;
+        result.ch = str;
+        return result;
     }
-    return parseWhile(str+1, [](char ch) {
+    auto tmp = parseWhile(str+1, [](char ch) {
         return !isReserved(ch);
     });
+    result.value = uint16_t(atoi(tmp.value.c_str()));
+    result.ch = tmp.ch; 
+    return result; 
 }
 
 static ParseResult<Authority> parseAuthority(char const* str) {
@@ -121,14 +127,14 @@ static Uri parseUri(char const* str) {
 }
 
 
-Authority::Authority(std::string const& user, std::string const& host, std::string const& port) {
+Authority::Authority(std::string const& user, std::string const& host, uint16_t port) {
     user_ = user;
     host_ = host;
     port_ = port;
 }
 
 Authority::Authority() {
-    port_ = "";
+    port_ = 0;
 }
 
 void Authority::userIs(std::string const& user) {
@@ -139,7 +145,7 @@ void Authority::hostIs(std::string const& host) {
     host_ = host;
 }
 
-void Authority::portIs(std::string const& port) {
+void Authority::portIs(uint16_t port) {
     port_ = port;
 }
 

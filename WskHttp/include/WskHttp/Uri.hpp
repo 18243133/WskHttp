@@ -28,20 +28,20 @@ namespace WskHttp {
 
 class Authority {
 public:
-    Authority(std::string const& user, std::string const& host, std::string const& port);  
+    Authority(std::string const& user, std::string const& host, uint16_t port);  
     Authority();
 
     std::string const& user() const { return user_; }
     std::string const& host() const { return host_; }
-	std::string const& port() const { return port_; }
+    uint16_t port() const { return port_; }
 
     void userIs(std::string const& user);
     void hostIs(std::string const& host);
-    void portIs(std::string const& port);
+    void portIs(uint16_t port);
 private:
     std::string user_;
     std::string host_;
-	std::string port_;
+    uint16_t port_;
 };
 
 class Uri {
@@ -54,7 +54,7 @@ public:
     Authority const& authority() const { return authority_; }
     std::string const& path() const { return path_; }
     std::string const& host() const { return authority_.host(); }
-	std::string const& port() const { return authority_.port(); }
+    uint16_t port() const { return authority_.port(); }
 
     void schemeIs(std::string const& scheme);
     void authorityIs(Authority const& authority);

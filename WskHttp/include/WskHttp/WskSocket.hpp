@@ -10,7 +10,7 @@ public:
 	static VOID cleanup();
 
 	~WskSocket();
-	NTSTATUS connect(PUNICODE_STRING host, PUNICODE_STRING port);
+	NTSTATUS connect(PUNICODE_STRING host, UINT16 port);
 	NTSTATUS close();
 	NTSTATUS send(CONST VOID *data, SIZE_T size);
 	NTSTATUS recv(PVOID data, SIZE_T *size);

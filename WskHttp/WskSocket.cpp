@@ -56,11 +56,12 @@ VOID WskSocket::cleanup() {
 	WskDeregister(&registration_);
 }
 
-NTSTATUS WskSocket::connect(PUNICODE_STRING host, PUNICODE_STRING port) {
+NTSTATUS WskSocket::connect(PUNICODE_STRING host, UINT16 port) {
 	NTSTATUS status = STATUS_SUCCESS;
 	PIRP irp = nullptr;
 	KEVENT event;
 	PADDRINFOEXW remote_addr_info = nullptr;
+	PSOCKADDR_IN remote_addr = nullptr;
 	SOCKADDR_IN local_addr;
 	LARGE_INTEGER timeout;
 
@@ -83,7 +84,7 @@ NTSTATUS WskSocket::connect(PUNICODE_STRING host, PUNICODE_STRING port) {
 		provider_npi_.Dispatch->WskGetAddressInfo,
 			provider_npi_.Client,
 			host,
-			port,
+			nullptr,
 			NS_ALL,
 			nullptr,
 			nullptr,
@@ -102,6 +103,9 @@ NTSTATUS WskSocket::connect(PUNICODE_STRING host, PUNICODE_STRING port) {
 		goto ret;
 	}
 
+	remote_addr = (PSOCKADDR_IN)remote_addr_info->ai_addr;
+	remote_addr->sin_port = RtlUshortByteSwap(port);
+
 
 	// connect
 	IoReuseIrp(irp, STATUS_SUCCESS);
@@ -112,7 +116,7 @@ NTSTATUS WskSocket::connect(PUNICODE_STRING host, PUNICODE_STRING port) {
 			SOCK_STREAM,
 			IPPROTO_TCP,
 			(PSOCKADDR)&local_addr,
-			(PSOCKADDR)remote_addr_info->ai_addr,
+			(PSOCKADDR)remote_addr,
 			0,
 			nullptr,
 			nullptr,
