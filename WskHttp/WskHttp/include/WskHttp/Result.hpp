@@ -4,30 +4,27 @@
 namespace WskHttp {
 class Result {
 public:
-	Result(NTSTATUS status, std::string const& text) {
+	Result(NTSTATUS status, Response const& response) {
 		status_ = status;
-		response_ = NT_SUCCESS(status) ? new Response(text) : nullptr;
+		response_ = response;
 	}
 
-	Result(NTSTATUS status, const char *text) {
+	Result(NTSTATUS status) {
 		status_ = status;
-		response_ = NT_SUCCESS(status) ? new Response(text) : nullptr;
 	}
 
-	~Result() {
-		delete response_;
-	}
+	Result() : status_(STATUS_UNSUCCESSFUL), response_() {}
 
 	NTSTATUS status() {
 		return status_;
 	}
 
-	Response *response() {
+	Response const &response() {
 		return response_;
 	}
 
 private:
 	NTSTATUS status_;
-	Response *response_ = nullptr;
+	Response response_;
 };
 }

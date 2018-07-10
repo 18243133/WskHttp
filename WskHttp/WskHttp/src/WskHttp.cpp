@@ -36,7 +36,7 @@ Result send(Request const& request) {
     if (request.uri().scheme() == "http") {
         port = 80;
     } else {
-        return Result(STATUS_PROTOCOL_NOT_SUPPORTED, nullptr);
+        return Result(STATUS_PROTOCOL_NOT_SUPPORTED);
     }
     if (request.uri().port()) {
         port = request.uri().port();
@@ -50,19 +50,19 @@ Result send(Request const& request) {
 	RtlInitAnsiString(&host_ansi, request.uri().host().c_str());
 	status = RtlAnsiStringToUnicodeString(&host_unicode, &host_ansi, true);
 	if (!NT_SUCCESS(status)) {
-		return Result(status, nullptr);
+		return Result(status);
 	}
 
 	status = socket.connect(&host_unicode, port);
 	RtlFreeUnicodeString(&host_unicode);
 
 	if (!NT_SUCCESS(status)) {
-		return Result(status, nullptr);
+		return Result(status);
 	}
 
 	status = socket.send(string.c_str(), string.size());
     if (!NT_SUCCESS(status)) {
-        return Result(status, nullptr);
+        return Result(status);
     }
 
     std::vector<char> buffer(16384); // 16 KiB
@@ -72,7 +72,7 @@ Result send(Request const& request) {
     for (;;) {
         status = socket.recv(&buffer[0], &size);
         if (!NT_SUCCESS(status)) {
-            return Result(status, nullptr);
+            return Result(status);
         }
         if (size == 0) {
             break;
@@ -80,7 +80,7 @@ Result send(Request const& request) {
         s.append(&buffer[0], size);
     }
 
-	return Result(STATUS_SUCCESS, s);
+	return Result(STATUS_SUCCESS, Response(s));
 }
 
 Result get(std::string const& path, std::string const& data) {
