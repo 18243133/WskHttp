@@ -1,26 +1,36 @@
-http
-====
+WskHttp
+=======
 
-Simple HTTP asynchronous library for modern C++. Depends on [coro](https://github.com/mfichman/coro.git). Here's the basic usage:
+Windows kernel drivers simple HTTP library for modern C++. Fork of [http](https://github.com/mfichman/http.git). Here's the basic usage:
 
-```
-auto coro = coro::start([]{
-    try {
-        auto res = http::post(
-            "https://192.168.1.154/user/login", 
-             "{ \"UserId\": \"matt\", \"Password\": \"matt\"} "
-        );
+```cpp
 
-        auto sessionId = res.cookie("SessionId");
-        std::cout << sessionId.value() << std::endl;
-        std::cout << sessionId.httpOnly() << std::endl;
-        std::cout << sessionId.secure() << std::endl;
-        std::cout << sessionId.path() << std::endl;
-    } catch (coro::SystemError const& ex) {
-        std::cerr << ex.what() << std::endl;
-    }
-});
-coro::run();
+	NTSTATUS status;
+
+	status = WskHttp::startup();
+	if (!NT_SUCCESS(status)) {
+		DbgPrint("WskHttp::startup error %X\n", status);
+		return status;
+	}
+
+	auto result_get = WskHttp::get("http://192.168.0.105:8000");
+	if (NT_SUCCESS(result_get.status())) {
+		DbgPrint("%s\n", result_get.response()->data().c_str());
+	} else {
+		DbgPrint("WskHttp::get error %X\n", result_get.status());
+	}
+
+	auto result_post = WskHttp::post("http://192.168.0.105:8000",
+		"something to post"
+	);
+	if (NT_SUCCESS(result_post.status())) {
+		DbgPrint("%s\n", result_post.response()->data().c_str());
+	} else {
+		DbgPrint("WskHttp::post error %X\n", result_get.status());
+	}
+
+	WskHttp::cleanup();
+
 ```
 
 
