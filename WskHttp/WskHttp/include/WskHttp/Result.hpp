@@ -4,9 +4,9 @@
 namespace WskHttp {
 class Result {
 public:
-	Result(NTSTATUS status, Response const& response) {
+	Result(NTSTATUS status, std::string const& response) {
 		status_ = status;
-		response_ = response;
+		response_ = Response(response);
 	}
 
 	Result(NTSTATUS status) {

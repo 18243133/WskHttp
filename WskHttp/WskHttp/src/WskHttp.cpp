@@ -80,7 +80,7 @@ Result send(Request const& request) {
         s.append(&buffer[0], size);
     }
 
-	return Result(STATUS_SUCCESS, Response(s));
+	return Result(STATUS_SUCCESS, s);
 }
 
 Result get(std::string const& path, std::string const& data) {
