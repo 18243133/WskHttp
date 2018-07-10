@@ -123,32 +123,36 @@ std::string str(Request const& request) {
 	s.append(str(request.method()));
 	s.append(" ");
 	s.append(path);
-	s.append(" HTTP/1.1\n");
+	s.append(" HTTP/1.1\r\n");
 
 	s.append(Headers::HOST);
 	s.append(": ");
 	s.append(request.uri().host());
-	s.append("\n");
-	char size[128];
-	sprintf_s(size, "%zd", request.data().size());
+	s.append("\r\n");
+	char size[32];
+#if _AMD64_
+	sprintf_s(size, "%I64u", request.data().size());
+#elif
+	sprintf_s(size, "%u", request.data().size());
+#endif
 	s.append(Headers::CONTENT_LENGTH);
 	s.append(": ");
 	s.append(size);
-	s.append("\n");
+	s.append("\r\n");
 
 	s.append(Headers::CONNECTION);
-	s.append(": close\n");
+	s.append(": close\r\n");
 
 	s.append(Headers::CONNECTION);
-	s.append(": identity\n");
+	s.append(": identity\r\n");
 
     for(auto header : request.headers()) {
 		s.append(header.first);
 		s.append(": ");
 		s.append(header.second);
-		s.append("\n");
+		s.append("\r\n");
     }
-	s.append("\n");
+	s.append("\r\n");
 	s.append(request.data());
     return s;
 }
