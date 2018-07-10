@@ -30,6 +30,15 @@ NTSTATUS DriverEntry(
 		DbgPrint("WskHttp::get error %X\n", result_get.status());
 	}
 
+	auto result_post = WskHttp::post("http://192.168.0.105:8000",
+		"something to post"
+	);
+	if (NT_SUCCESS(result_post.status())) {
+		DbgPrint("%s\n", result_post.response()->data().c_str());
+	} else {
+		DbgPrint("WskHttp::post error %X\n", result_get.status());
+	}
+
 	WskHttp::cleanup();
 
 	return STATUS_SUCCESS;
