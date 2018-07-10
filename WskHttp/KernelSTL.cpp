@@ -5,8 +5,9 @@
 /// @file
 /// Implements code to use STL in a driver project
 
-#include "WskHttp/common.hpp"
-#include <ntddk.h>
+#include <fltKernel.h>
+#undef _HAS_EXCEPTIONS
+#define _HAS_EXCEPTIONS 0
 
 // See common.h for details
 #pragma prefast(disable : 30030)

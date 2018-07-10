@@ -13,68 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Driver Files">
+      <UniqueIdentifier>{8E41214B-6785-4CFE-B992-037D68949A14}</UniqueIdentifier>
+      <Extensions>inf;inv;inx;mof;mc;</Extensions>
+    </Filter>
+    <Filter Include="Source Files\WskHttp">
+      <UniqueIdentifier>{6a7d6eb3-3d24-4f6c-85b6-a6c663239285}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WskSocket.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="WskHttp\src\Common.cpp">
+      <Filter>Source Files\WskHttp</Filter>
     </ClCompile>
-    <ClCompile Include="Cookie.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="WskHttp\src\Cookie.cpp">
+      <Filter>Source Files\WskHttp</Filter>
     </ClCompile>
-    <ClCompile Include="Headers.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="WskHttp\src\Headers.cpp">
+      <Filter>Source Files\WskHttp</Filter>
     </ClCompile>
-    <ClCompile Include="Request.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="WskHttp\src\Request.cpp">
+      <Filter>Source Files\WskHttp</Filter>
     </ClCompile>
-    <ClCompile Include="Response.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="WskHttp\src\Response.cpp">
+      <Filter>Source Files\WskHttp</Filter>
     </ClCompile>
-    <ClCompile Include="Uri.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="WskHttp\src\Uri.cpp">
+      <Filter>Source Files\WskHttp</Filter>
     </ClCompile>
-    <ClCompile Include="WskHttp.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="WskHttp\src\WskHttp.cpp">
+      <Filter>Source Files\WskHttp</Filter>
+    </ClCompile>
+    <ClCompile Include="WskHttp\src\WskSocket.cpp">
+      <Filter>Source Files\WskHttp</Filter>
     </ClCompile>
     <ClCompile Include="KernelSTL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\WskHttp\Cookies.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Cookies.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Error.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Error.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Headers.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Headers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Parse.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Parse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Request.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Request.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Response.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Response.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Uri.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Result.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\WskSocket.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Uri.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\WskHttp.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\WskHttp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Common.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\WskSocket.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\WskHttp\Result.hpp">
+    <ClInclude Include="WskHttp\include\WskHttp\Common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
