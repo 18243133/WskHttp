@@ -95,6 +95,7 @@ NTSTATUS WskSocket::connect(PUNICODE_STRING host, UINT16 port) {
 
 	if (status == STATUS_TIMEOUT) {
 		IoCancelIrp(irp);
+		KeWaitForSingleObject(&event, Executive, KernelMode, FALSE, NULL);
 		goto ret;
 	}
 
@@ -127,6 +128,7 @@ NTSTATUS WskSocket::connect(PUNICODE_STRING host, UINT16 port) {
 
 	if (status == STATUS_TIMEOUT) {
 		IoCancelIrp(irp);
+		KeWaitForSingleObject(&event, Executive, KernelMode, FALSE, NULL);
 		goto ret;
 	}
 
@@ -183,6 +185,7 @@ NTSTATUS WskSocket::close() {
 
 	if (status == STATUS_TIMEOUT) {
 		IoCancelIrp(irp);
+		KeWaitForSingleObject(&event, Executive, KernelMode, FALSE, NULL);
 		goto ret;
 	}
 
@@ -260,6 +263,7 @@ NTSTATUS WskSocket::send(CONST VOID *data, SIZE_T size) {
 
 	if (status == STATUS_TIMEOUT) {
 		IoCancelIrp(irp);
+		KeWaitForSingleObject(&event, Executive, KernelMode, FALSE, NULL);
 		goto ret;
 	}
 
@@ -334,6 +338,7 @@ NTSTATUS WskSocket::recv(PVOID data, SIZE_T *size) {
 
 	if (status == STATUS_TIMEOUT) {
 		IoCancelIrp(irp);
+		KeWaitForSingleObject(&event, Executive, KernelMode, FALSE, NULL);
 		goto ret;
 	}
 
